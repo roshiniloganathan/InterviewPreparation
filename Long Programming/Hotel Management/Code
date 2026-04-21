@@ -1,0 +1,92 @@
+import java.util.Scanner;
+
+// Customer class
+class Customer {
+    String name;
+
+    void getDetails(Scanner sc) {
+        System.out.print("Enter Customer Name: ");
+        name = sc.nextLine();
+    }
+}
+
+// Room class
+class Room {
+    int roomType;
+    int roomPrice;
+
+    void selectRoom(Scanner sc) {
+        System.out.println("\nSelect Room Type:");
+        System.out.println("1. Standard (₹1000)");
+        System.out.println("2. Deluxe (₹2000)");
+        System.out.println("3. Suite (₹3000)");
+
+        roomType = sc.nextInt();
+
+        switch (roomType) {
+            case 1:
+                roomPrice = 1000;
+                break;
+            case 2:
+                roomPrice = 2000;
+                break;
+            case 3:
+                roomPrice = 3000;
+                break;
+            default:
+                System.out.println("Invalid choice, defaulting to Standard");
+                roomPrice = 1000;
+        }
+    }
+}
+
+// Booking class
+class Booking {
+    int days;
+    int totalBill;
+
+    void getDays(Scanner sc) {
+        System.out.print("\nEnter number of days: ");
+        days = sc.nextInt();
+    }
+
+    void calculateBill(int pricePerDay) {
+        totalBill = days * pricePerDay;
+    }
+
+    void display(Customer c, Room r) {
+        System.out.println("\n----- Booking Details -----");
+        System.out.println("Customer Name: " + c.name);
+
+        String roomName = "";
+        if (r.roomType == 1) roomName = "Standard";
+        else if (r.roomType == 2) roomName = "Deluxe";
+        else if (r.roomType == 3) roomName = "Suite";
+
+        System.out.println("Room Type: " + roomName);
+        System.out.println("Days: " + days);
+        System.out.println("Total Bill: ₹" + totalBill);
+    }
+}
+
+// Main class
+public class HotelManagementSystem {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        Customer c = new Customer();
+        Room r = new Room();
+        Booking b = new Booking();
+
+        System.out.println("===== HOTEL MANAGEMENT SYSTEM =====");
+
+        c.getDetails(sc);
+        r.selectRoom(sc);
+        b.getDays(sc);
+
+        b.calculateBill(r.roomPrice);
+        b.display(c, r);
+
+        sc.close();
+    }
+}
